@@ -96,7 +96,7 @@ pub fn format_jj(info: &JjInfo, config: &Config) -> String {
         out.push_str(&format_segment(&bookmarks_text, GREEN, display.show_color));
     }
 
-    // Status indicators (priority: ! > ⇔ > ∅ > ⇡)
+    // Status indicators (priority: ! > ⇔ > ✔ > ⇡)
     if display.show_status {
         let mut status = String::with_capacity(8);
         if info.conflict {
@@ -105,9 +105,9 @@ pub fn format_jj(info: &JjInfo, config: &Config) -> String {
         if info.divergent {
             status.push('⇔');
         }
-        // Only show ∅ for non-empty commits with empty description
+        // Only show ✔ for non-empty commits with empty description
         if info.empty_desc && !info.empty_commit {
-            status.push('∅');
+            status.push('✔');
         }
         if info.has_remote && !info.is_synced {
             status.push('⇡');
@@ -118,8 +118,8 @@ pub fn format_jj(info: &JjInfo, config: &Config) -> String {
                 out.push(' ');
             }
             let status_text = format!("[{}]", &status);
-            // Use yellow if status is only ∅, otherwise red
-            let color = if status == "∅" { YELLOW } else { RED };
+            // Use yellow if status is only ✔, otherwise red
+            let color = if status == "✔" { YELLOW } else { RED };
             out.push_str(&format_segment(&status_text, color, display.show_color));
         }
     }
